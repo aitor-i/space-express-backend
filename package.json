@@ -14,7 +14,8 @@
     "validate": "npm run lint && npm run check-format && npm run test -- --no-watch",
     "pre-push": "npm run format && npm run lint",
     "pre-commit": "npm run format",
-    "dev": "npx ts-node index.ts"
+    "dev": "npx ts-node index.ts",
+    "build": "npx tsc"
   },
   "repository": {
     "type": "git",

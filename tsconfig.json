@@ -7,7 +7,7 @@
     "skipLibCheck": true /* Skip type checking of declaration files */,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file */,
     "outDir": "./dist" /* Redirect output structure to the directory */,
-    "baseUrl": "./",
+    "baseUrl": "./src",
 
     /* Sourcemaps and Debugging */
     "sourceMap": true /* Generates corresponding '.map' file */,
@@ -17,7 +17,7 @@
     /* Advanced Options */
     "resolveJsonModule": true /* Allows import of JSON modules */,
     "declaration": false /* Generate corresponding '.d.ts' file */,
-    "rootDir": "./src" /* Specify the root directory of input files */,
+    "rootDir": "./" /* Specify the root directory of input files */,
 
     /* Type Root Directories */
     "typeRoots": ["node_modules/@types"]
@@ -25,5 +25,11 @@
     /* Exclude */
     //"exclude": ["node_modules", "dist"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["./**/*.ts"],
+"exclude": [
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts"
+  ]
 }
