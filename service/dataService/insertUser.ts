@@ -1,10 +1,6 @@
 import { usersCollection, mongoClient, getPointer } from "./mongoClient";
 
-export interface UserModel {
-  username: string;
-  password: string;
-  email: string;
-}
+import { UserModel } from "../../domain/models/userModel";
 
 export async function insetUser(user: UserModel) {
   try {
