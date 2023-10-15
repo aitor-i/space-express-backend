@@ -7,6 +7,9 @@ services:
       - "4000:4000"
     environment:
       MONGO_URI: mongodb://mongo:27017/your-database-name  # Use the hostname 'mongo' to connect to the MongoDB service
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+
 
   mongo:
     image: mongo
