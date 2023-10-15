@@ -1,5 +1,8 @@
 import { MongoClient, MongoClientOptions, Db } from "mongodb";
-import {} from "dotenv/config";
+
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 const mongoClientOptions: MongoClientOptions = {};
 
