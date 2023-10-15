@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { passwordHasher } from "../../application/passwordHasher/passwordHasher";
 import { insetUser } from "../dataService/insertUser";
-import { messageGenerator } from "./loginController";
+import { messageGenerator } from "../messageGenerator/messageGenerator";
 
 interface RegisterViewModel {
   username: string;

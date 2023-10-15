@@ -13,7 +13,7 @@ describe("User in DB", () => {
     } as UserModel;
 
     const dbResponse = await insetUser(testUser);
-    deleteUser(testUser.email);
+    deleteUser(testUser!.email!);
 
     expect(dbResponse.acknowledged).toBe(true);
   });
@@ -27,12 +27,12 @@ describe("User in DB", () => {
 
     try {
       const dbResponse = await insetUser(testUser);
-      const userFromDb = await findUser(testUser.email);
+      const userFromDb = await findUser(testUser!.email!);
 
       expect(userFromDb?.username).toBe(testUser.username);
     } catch {
     } finally {
-      deleteUser(testUser.email);
+      deleteUser(testUser!.email!);
     }
   });
 });
