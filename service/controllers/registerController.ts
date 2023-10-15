@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { passwordHasher } from "../../application/passwordHasher/passwordHasher";
 import { insetUser } from "../dataService/insertUser";
+import { messageGenerator } from "./loginController";
 
 interface RegisterViewModel {
   username: string;
@@ -15,6 +16,8 @@ export async function registerController(req: Request, res: Response) {
     const hashedPassword = await passwordHasher(password);
 
     await insetUser({ username, password: hashedPassword, email });
+
+    res.status(202).json(messageGenerator(`User ${username} register!`))
   } catch {
     res.status(500).json({ message: "Error on sign in!" });
   }
