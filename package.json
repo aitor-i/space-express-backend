@@ -4,6 +4,7 @@
   "description": "Login service for space express web page",
   "main": "index.js",
   "scripts": {
+    "start":"node ./dist/index.js",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "lint": "eslint .  --ignore-path .eslintignore",
