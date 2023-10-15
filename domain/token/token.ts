@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -13,17 +13,17 @@ class Token {
   token: string;
 
   constructor() {
-    this.token = '';
+    this.token = "";
   }
 
   generateToken(username: string) {
     this.token = jwt.sign({ username }, SECRET_KEY, {
-      expiresIn: '30min'
+      expiresIn: "30min",
     });
   }
   getUser(token: string) {
     const tokenObject = jwt.verify(token, SECRET_KEY) as UsernameToken;
-    if (!tokenObject) throw new Error('Error on get user from token');
+    if (!tokenObject) throw new Error("Error on get user from token");
     return tokenObject!.username!;
   }
 
