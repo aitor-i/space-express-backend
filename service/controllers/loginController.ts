@@ -2,34 +2,14 @@ import { Response, Request } from "express";
 
 import { findUser } from "../dataService/findUser";
 import { UserModel } from "../../domain/models/userModel";
-import { passwordHasher } from "../../application/passwordHasher/passwordHasher";
+import { messageGenerator } from "../messageGenerator/messageGenerator";
+import { loginValidation } from "../../application/loginValidator/loginValidator";
 
 import Token from "../../domain/token/token";
 
-interface LoginViewModel {
+export interface LoginViewModel {
   email: string;
   password: string;
-}
-
-export async function loginValidation(
-  credentials: LoginViewModel,
-  userFromDb: UserModel,
-) {
-  const hashPassword = await passwordHasher(credentials.password);
-
-  if (hashPassword !== userFromDb.password) {
-    console.log("Invalid Password!");
-    return false;
-  }
-
-  return true;
-}
-
-export function messageGenerator(message: string) {
-  interface ResponseMessage {
-    message: string;
-  }
-  return { message } as ResponseMessage;
 }
 
 export async function loginController(req: Request, res: Response) {
