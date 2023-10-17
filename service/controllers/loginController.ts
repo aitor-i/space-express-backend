@@ -31,8 +31,9 @@ export async function loginController(req: Request, res: Response) {
     token.generateToken(credentials.email);
     const tokenFromUser = token.getToken();
 
-
-    res.status(202).json({...messageGenerator("User loged"), token:tokenFromUser})
+    res
+      .status(202)
+      .json({ ...messageGenerator("User loged"), token: tokenFromUser });
   } catch (err: Error | unknown) {
     console.log(err);
     res.status(500).json({ message: "Error on log in" });

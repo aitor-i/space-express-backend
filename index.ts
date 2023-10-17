@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 app.use("/api/space-express/auth", loginRouter);
 
 app.use("*", (req, res) => {
-    console.log(req.path)
-    console.log(req.body)
+  console.log(req.path);
+  console.log(req.body);
   res.status(404).json({ message: "Not found!" });
 });
 

@@ -17,7 +17,7 @@ export async function registerController(req: Request, res: Response) {
 
     await insetUser({ username, password: hashedPassword, email });
 
-    res.status(202).json(messageGenerator(`User ${username} register!`))
+    res.status(202).json(messageGenerator(`User ${username} register!`));
   } catch {
     res.status(500).json({ message: "Error on sign in!" });
   }
