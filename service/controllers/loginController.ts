@@ -1,11 +1,10 @@
 import { Response, Request } from "express";
 
 import { findUser } from "../dataService/findUser";
-import { UserModel } from "../../domain/models/userModel";
 import { messageGenerator } from "../messageGenerator/messageGenerator";
 import { loginValidation } from "../../application/loginValidator/loginValidator";
+import { generateToken } from "../../application/generateToken/generateToken";
 
-import Token from "../../domain/token/token";
 
 export interface LoginViewModel {
   email: string;
@@ -27,13 +26,11 @@ export async function loginController(req: Request, res: Response) {
       return;
     }
 
-    const token = new Token();
-    token.generateToken(credentials.email);
-    const tokenFromUser = token.getToken();
+        const tokenFromUser = generateToken(credentials.email);
 
     res
       .status(202)
-      .json({ ...messageGenerator("User loged"), token: tokenFromUser });
+      .json({ ...messageGenerator("User loged"), token: tokenFromUser, username:user.username });
   } catch (err: Error | unknown) {
     console.log(err);
     res.status(500).json({ message: "Error on log in" });
