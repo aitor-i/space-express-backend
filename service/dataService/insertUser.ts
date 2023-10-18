@@ -9,13 +9,13 @@ export async function insetUser(user: UserModel) {
 
     const isUser = await userPointer.findOne({ email: user.email });
     if (isUser) {
-      console.log(`User ${user.username} is taken!`);
-      throw new Error(`User name ${user.username} is taken!`);
+      console.log(`Email ${user.email} is taken!`);
+        return {isValid: false, message:"Email is taken!"}
     }
     const dbResponse = await userPointer.insertOne(user);
     if (!dbResponse.acknowledged) throw new Error("Error on user  db");
 
-    return dbResponse;
+    return {isValid:true, message:"User inseted"};
   } catch (error: Error | unknown) {
     console.log(Error.toString());
     throw new Error("Error inserting user");
