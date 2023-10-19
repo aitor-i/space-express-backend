@@ -7,6 +7,11 @@ export function validateTokenController (req:Request, res:Response){
     try{ 
         const {token: tokenToValidate}= req.body;
 
+        if(!req.body.token) { 
+            res.status(403).json(messageGenerator("No token found"))
+            return
+        }
+
         const isExpired = isTokenExpired(tokenToValidate);
         if(isExpired){
             
