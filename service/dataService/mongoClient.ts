@@ -6,12 +6,9 @@ dotenv.config();
 
 const mongoClientOptions: MongoClientOptions = {};
 
-const username = process.env.MONGO_ROOT_USERNAME;
-const password = process.env.MONGO_ROOT_PASSWORD;
+const mongoUri = process.env.MONGO_URI
 
-console.log("DB username:", username);
-
-const uri = `mongodb://${username}:${password}@localhost:27017`;
+const uri = mongoUri!;
 
 export const mongoClient: MongoClient = new MongoClient(
   uri,
