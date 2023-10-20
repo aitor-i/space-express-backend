@@ -3,6 +3,7 @@ import { passwordHasher } from "../../application/passwordHasher/passwordHasher"
 import { insetUser } from "../dataService/insertUser";
 import { messageGenerator } from "../messageGenerator/messageGenerator";
 import { generateToken } from "../../application/generateToken/generateToken";
+import { sendEmail } from "../emails/sendEmail";
 
 interface RegisterViewModel {
   username: string;
@@ -27,8 +28,10 @@ export async function registerController(req: Request, res: Response) {
 
     const token = generateToken(email);
 
+    const resFromMail = await sendEmail({reciever:email, sender:username}) 
     res.status(202).json({...messageGenerator(`User ${username} register!`), token, username});
-  } catch {
+  } catch(err:Error|unknown) {
+        console.error(err)
     res.status(500).json({ message: "Error on sign in!" });
   }
 }
