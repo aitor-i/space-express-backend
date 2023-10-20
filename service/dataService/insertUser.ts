@@ -1,4 +1,5 @@
 import { usersCollection, mongoClient, getPointer } from "./mongoClient";
+interface UserDocument extends Document, UserModel {}
 
 import { UserModel } from "../../domain/models/userModel";
 
