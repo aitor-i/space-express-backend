@@ -15,7 +15,7 @@ describe("User in DB", () => {
     const dbResponse = await insetUser(testUser);
     deleteUser(testUser!.email!);
 
-    expect(dbResponse.acknowledged).toBe(true);
+    expect(dbResponse.isValid).toBe(true);
   });
 
   it("Should find user", async () => {
