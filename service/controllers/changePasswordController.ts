@@ -39,7 +39,7 @@ export async function changePasswordController(req:Request, res:Response){
 
 
         } 
-        res.status(202).json(messageGenerator("Password changed successfully!"))
+        res.status(202).json({...messageGenerator("Password changed successfully!") ,isSuccess: true})
 
     }catch(err:Error| unknown){ 
         console.error(err)
