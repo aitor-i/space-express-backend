@@ -1,24 +1,23 @@
-# Use an official Node.js runtime as the base image
-FROM node:14
+# Use the official Node.js image
+FROM node:latest
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
+# Set the working directory in the container
+WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+# Copy package.json and package-lock.json to the container
 COPY package*.json ./
 
 # Install application dependencies
 RUN npm install
 
-# Copy the rest of the application source code to the container
+# Copy all application files to the container
 COPY . .
 
-# Build the TypeScript code
-RUN npm run build
-
-# Expose the port your Node.js app will listen on
+# Expose the port your application will run on
 EXPOSE 4000
 
-# Start your Node.js application from the built output
-CMD ["node", "./dist/index.js"]
+# Build the application
+RUN npm run build
 
+# Start your Node.js application
+CMD ["node", "./dist/index.js"]
