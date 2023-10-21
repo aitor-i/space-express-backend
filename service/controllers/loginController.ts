@@ -5,7 +5,6 @@ import { messageGenerator } from "../messageGenerator/messageGenerator";
 import { loginValidation } from "../../application/loginValidator/loginValidator";
 import { generateToken } from "../../application/generateToken/generateToken";
 
-
 export interface LoginViewModel {
   email: string;
   password: string;
@@ -26,11 +25,15 @@ export async function loginController(req: Request, res: Response) {
       return;
     }
 
-        const tokenFromUser = generateToken(credentials.email);
+    const tokenFromUser = generateToken(credentials.email);
 
     res
       .status(202)
-      .json({ ...messageGenerator("User loged"), token: tokenFromUser, username:user.username });
+      .json({
+        ...messageGenerator("User loged"),
+        token: tokenFromUser,
+        username: user.username,
+      });
   } catch (err: Error | unknown) {
     console.log(err);
     res.status(500).json({ message: "Error on log in" });

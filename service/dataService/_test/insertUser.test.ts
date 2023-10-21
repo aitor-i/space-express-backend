@@ -18,17 +18,17 @@ describe("User in DB", () => {
     expect(dbResponse.isValid).toBe(true);
   });
 
-    it("Should find user", async () => {
-        const testUser = {
-            username: "TEST_NAME",
-            password: "TEST_PASS",
-            email: "TEST@TEST.TS",
-        } as UserModel;
+  it("Should find user", async () => {
+    const testUser = {
+      username: "TEST_NAME",
+      password: "TEST_PASS",
+      email: "TEST@TEST.TS",
+    } as UserModel;
 
-        const dbResponse = await insetUser(testUser);
-        const userFromDb = await findUser(testUser!.email!);
+    const dbResponse = await insetUser(testUser);
+    const userFromDb = await findUser(testUser!.email!);
 
-        deleteUser(testUser!.email!);
-        expect(userFromDb?.username).toBe(testUser.username);
-    });
+    deleteUser(testUser!.email!);
+    expect(userFromDb?.username).toBe(testUser.username);
+  });
 });

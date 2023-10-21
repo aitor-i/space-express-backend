@@ -12,5 +12,5 @@ loginRouter.get("/", (req: Request, res: Response) => {
 
 loginRouter.post("/register", registerController);
 loginRouter.post("/login", loginController);
-loginRouter.post("/validate-token", validateTokenController )
-loginRouter.post("/change-password", changePasswordController)
+loginRouter.post("/validate-token", validateTokenController);
+loginRouter.post("/change-password", changePasswordController);

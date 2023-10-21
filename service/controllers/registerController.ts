@@ -17,21 +17,32 @@ export async function registerController(req: Request, res: Response) {
 
     const hashedPassword = await passwordHasher(password);
 
-    const dbResponse = await insetUser({ username, password: hashedPassword, email });
+    const dbResponse = await insetUser({
+      username,
+      password: hashedPassword,
+      email,
+    });
 
-    if(!dbResponse.isValid) { 
-        
-    console.log(dbResponse)
-        res.status(418).json({...messageGenerator(dbResponse.message), username})
-            return
-        } 
+    if (!dbResponse.isValid) {
+      console.log(dbResponse);
+      res
+        .status(418)
+        .json({ ...messageGenerator(dbResponse.message), username });
+      return;
+    }
 
     const token = generateToken(email);
 
-    const resFromMail = await sendEmail({reciever:email, sender:username}) 
-    res.status(202).json({...messageGenerator(`User ${username} register!`), token, username});
-  } catch(err:Error|unknown) {
-        console.error(err)
+    const resFromMail = await sendEmail({ reciever: email, sender: username });
+    res
+      .status(202)
+      .json({
+        ...messageGenerator(`User ${username} register!`),
+        token,
+        username,
+      });
+  } catch (err: Error | unknown) {
+    console.error(err);
     res.status(500).json({ message: "Error on sign in!" });
   }
 }

@@ -31,11 +31,15 @@ class Token {
     return this.token;
   }
 
-  isExpired(token:string){ 
-       const res= jwt.verify(token, SECRET_KEY) as {exp:number, iat:number, username:string};
-        console.log(res)
-        return  res.exp <= 0;
-    }
+  isExpired(token: string) {
+    const res = jwt.verify(token, SECRET_KEY) as {
+      exp: number;
+      iat: number;
+      username: string;
+    };
+    console.log(res);
+    return res.exp <= 0;
+  }
 }
 
 export default Token;

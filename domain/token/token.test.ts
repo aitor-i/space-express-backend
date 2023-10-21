@@ -25,8 +25,7 @@ describe("Token", () => {
     expect(usernameFromToken).toBe(username);
   });
 
-    it("should return not expired", ()=>{ 
-        
+  it("should return not expired", () => {
     const username = "John";
     const token = new Token();
 
@@ -35,6 +34,5 @@ describe("Token", () => {
     const isExpired = token.isExpired(stringToken);
 
     expect(isExpired).toBe(false);
-
-    })
+  });
 });

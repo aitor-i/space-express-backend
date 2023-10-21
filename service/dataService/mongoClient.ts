@@ -6,7 +6,7 @@ dotenv.config();
 
 const mongoClientOptions: MongoClientOptions = {};
 
-const mongoUri = process.env.MONGO_URI
+const mongoUri = process.env.MONGO_URI;
 
 const uri = mongoUri!;
 
