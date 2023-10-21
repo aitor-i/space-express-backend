@@ -20,8 +20,9 @@ export function validateTokenController (req:Request, res:Response){
         }
         res.status(200).json({...messageGenerator("The token is still valid!"), isValid: !isExpired})
     }catch(err:Error|unknown){ 
+
     console.error(err)
-    res.status(500).json(messageGenerator("Error velidating token!"))
+    res.status(500).json({...messageGenerator("Error velidating token!"), isValid:false})
 
     }
 
