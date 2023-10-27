@@ -19,7 +19,8 @@ export const dbName = "auth-db";
 
 export const usersCollection = "users";
 export const invitationsCollection = "invitations";
-export type Collections = typeof usersCollection | typeof invitationsCollection;
+export const seatsCollection = "seats"
+export type Collections = typeof usersCollection | typeof invitationsCollection | typeof seatsCollection;
 
 export function getPointer(collection: Collections) {
   const database: Db = mongoClient.db(dbName);
