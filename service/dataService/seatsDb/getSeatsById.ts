@@ -1,38 +1,23 @@
-import { ObjectId } from "mongodb";
 import { seatsCollection, mongoClient, getPointer } from "./../mongoClient";
+import { generateEmptySeatsForId } from "../../../application/generateEmptySeats/generateEmptySeats";
+import { SeatModel } from "../../../domain/models/seatModel";
 
-interface SeatModel {
-  flightId: string;
-  free: boolean;
-  seatNumber: number;
-  userId: ObjectId | undefined;
-  reservationDate: Date | null;
-}
 
-export async function getSeatsById(fligthId: string) {
+export async function getSeatsById(flightId: string) {
   try {
     await mongoClient.connect();
     const seatsPointer = getPointer(seatsCollection);
 
     const seats = await seatsPointer
-      .find({ flightId: fligthId } as Partial<SeatModel>)
+      .find({ flightId: flightId } as Partial<SeatModel>)
       .toArray();
     console.log("Seats: ", seats);
 
     if (seats.length === 0) {
-      const seatsList = [] as SeatModel[];
-      for (let i = 1; i <= 20; i++) {
-        const seat: SeatModel = {
-          flightId: fligthId,
-          free: true,
-          seatNumber: i,
-          userId: undefined,
-          reservationDate: null,
-        };
-        seatsList.push(seat);
-      }
+      const seatsList = generateEmptySeatsForId(flightId)
       const dbResponse = await seatsPointer.insertMany(seatsList);
       console.log(dbResponse.insertedIds);
+        if(!dbResponse.acknowledged) throw new Error("Error on adding emprty seats")
 
       return seatsList;
     }
