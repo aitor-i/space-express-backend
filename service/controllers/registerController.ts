@@ -34,13 +34,11 @@ export async function registerController(req: Request, res: Response) {
     const token = generateToken(email);
 
     const resFromMail = await sendEmail({ reciever: email, sender: username });
-    res
-      .status(202)
-      .json({
-        ...messageGenerator(`User ${username} register!`),
-        token,
-        username,
-      });
+    res.status(202).json({
+      ...messageGenerator(`User ${username} register!`),
+      token,
+      username,
+    });
   } catch (err: Error | unknown) {
     console.error(err);
     res.status(500).json({ message: "Error on sign in!" });

@@ -37,12 +37,10 @@ export async function changePasswordController(req: Request, res: Response) {
     if (!isChangeSuccessfull) {
       res.status(500).json(messageGenerator("Error changin the password"));
     }
-    res
-      .status(202)
-      .json({
-        ...messageGenerator("Password changed successfully!"),
-        isSuccess: true,
-      });
+    res.status(202).json({
+      ...messageGenerator("Password changed successfully!"),
+      isSuccess: true,
+    });
   } catch (err: Error | unknown) {
     console.error(err);
     res.status(500).json(messageGenerator("Error on password changing!"));

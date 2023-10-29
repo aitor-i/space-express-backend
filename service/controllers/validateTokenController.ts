@@ -18,12 +18,10 @@ export function validateTokenController(req: Request, res: Response) {
         .json({ ...messageGenerator("Token has spired"), isValid: !isExpired });
       return;
     }
-    res
-      .status(200)
-      .json({
-        ...messageGenerator("The token is still valid!"),
-        isValid: !isExpired,
-      });
+    res.status(200).json({
+      ...messageGenerator("The token is still valid!"),
+      isValid: !isExpired,
+    });
   } catch (err: Error | unknown) {
     console.error(err);
     res
