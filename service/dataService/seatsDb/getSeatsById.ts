@@ -2,7 +2,6 @@ import { seatsCollection, mongoClient, getPointer } from "./../mongoClient";
 import { generateEmptySeatsForId } from "../../../application/generateEmptySeats/generateEmptySeats";
 import { SeatModel } from "../../../domain/models/seatModel";
 
-
 export async function getSeatsById(flightId: string) {
   try {
     await mongoClient.connect();
@@ -14,10 +13,11 @@ export async function getSeatsById(flightId: string) {
     console.log("Seats: ", seats);
 
     if (seats.length === 0) {
-      const seatsList = generateEmptySeatsForId(flightId)
+      const seatsList = generateEmptySeatsForId(flightId);
       const dbResponse = await seatsPointer.insertMany(seatsList);
       console.log(dbResponse.insertedIds);
-        if(!dbResponse.acknowledged) throw new Error("Error on adding emprty seats")
+      if (!dbResponse.acknowledged)
+        throw new Error("Error on adding emprty seats");
 
       return seatsList;
     }
