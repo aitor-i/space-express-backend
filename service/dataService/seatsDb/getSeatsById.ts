@@ -6,11 +6,13 @@ import { WithId, Document } from "mongodb";
 interface SeatsDocument extends SeatModel, Document {}
 
 function seatsMapper(seats: WithId<SeatsDocument>[]) {
-  const seatsViewModel = seats.map((seat) => {
-    seat.free, seat.flightId, seat.reservationDate, seat.seatNumber;
-  });
+  const seatsViewModel = seats.map((seat) => { 
+        const {_id, ...seatVM} = seat
+        return seatVM
+    });
   return seatsViewModel;
 }
+
 
 export async function getSeatsById(flightId: string) {
   try {
@@ -20,7 +22,6 @@ export async function getSeatsById(flightId: string) {
     const seats = (await seatsPointer
       .find({ flightId: flightId } as Partial<SeatModel>)
       .toArray()) as WithId<SeatsDocument>[];
-    console.log("Seats: ", seats);
 
     if (seats.length === 0) {
       const seatsList = generateEmptySeatsForId(flightId);
@@ -31,7 +32,9 @@ export async function getSeatsById(flightId: string) {
 
       return seatsList;
     }
+
     return seatsMapper(seats);
+
   } catch (err: Error | unknown) {
     console.error(err);
     return [];
