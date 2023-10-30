@@ -1,15 +1,25 @@
 import { seatsCollection, mongoClient, getPointer } from "./../mongoClient";
 import { generateEmptySeatsForId } from "../../../application/generateEmptySeats/generateEmptySeats";
 import { SeatModel } from "../../../domain/models/seatModel";
+import { WithId, Document } from "mongodb";
+
+interface SeatsDocument extends SeatModel, Document {}
+
+function seatsMapper(seats: WithId<SeatsDocument>[]) {
+  const seatsViewModel = seats.map((seat) => {
+    seat.free, seat.flightId, seat.reservationDate, seat.seatNumber;
+  });
+  return seatsViewModel;
+}
 
 export async function getSeatsById(flightId: string) {
   try {
     await mongoClient.connect();
     const seatsPointer = getPointer(seatsCollection);
 
-    const seats = await seatsPointer
+    const seats = (await seatsPointer
       .find({ flightId: flightId } as Partial<SeatModel>)
-      .toArray();
+      .toArray()) as WithId<SeatsDocument>[];
     console.log("Seats: ", seats);
 
     if (seats.length === 0) {
@@ -21,7 +31,7 @@ export async function getSeatsById(flightId: string) {
 
       return seatsList;
     }
-    return seats;
+    return seatsMapper(seats);
   } catch (err: Error | unknown) {
     console.error(err);
     return [];
