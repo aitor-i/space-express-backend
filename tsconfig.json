@@ -1,35 +1,30 @@
 {
-  "compilerOptions": {
-    "target": "ES2020" /* Specify ECMAScript target version */,
-    "module": "commonjs" /* Specify module code generation */,
-    "strict": true /* Enable strict type-checking options */,
-    "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules */,
-    "skipLibCheck": true /* Skip type checking of declaration files */,
-    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file */,
-    "outDir": "./dist" /* Redirect output structure to the directory */,
-    "baseUrl": "./src",
+    "compilerOptions": {
+        "target": "ES2020" /* Specify ECMAScript target version */,
+        "module": "commonjs" /* Specify module code generation */,
+        "strict": true /* Enable strict type-checking options */,
+        "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules */,
+        "skipLibCheck": true /* Skip type checking of declaration files */,
+        "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file */,
+        "outDir": "./dist" /* Redirect output structure to the directory */,
+        "baseUrl": "./src",
 
-    /* Sourcemaps and Debugging */
-    "sourceMap": true /* Generates corresponding '.map' file */,
-    "inlineSourceMap": false /* Embed the source map in the compiled file */,
-    "inlineSources": false /* Embed the TypeScript source code in the source map */,
+        /* Sourcemaps and Debugging */
+        "sourceMap": true /* Generates corresponding '.map' file */,
+        "inlineSourceMap": false /* Embed the source map in the compiled file */,
+        "inlineSources": false /* Embed the TypeScript source code in the source map */,
 
-    /* Advanced Options */
-    "resolveJsonModule": true /* Allows import of JSON modules */,
-    "declaration": false /* Generate corresponding '.d.ts' file */,
-    "rootDir": "./" /* Specify the root directory of input files */,
+        /* Advanced Options */
+        "resolveJsonModule": true /* Allows import of JSON modules */,
+        "declaration": false /* Generate corresponding '.d.ts' file */,
+        "rootDir": "./" /* Specify the root directory of input files */,
 
-    /* Type Root Directories */
-    "typeRoots": ["node_modules/@types"]
+        /* Type Root Directories */
+        "typeRoots": ["node_modules/@types"]
 
-    /* Exclude */
-    //"exclude": ["node_modules", "dist"]
-  },
-  "include": ["./**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "./node_modules",
-    "./node_modules/*",
-    "./node_modules/@types/node/index.d.ts"
-  ]
+        /* Exclude */
+        //"exclude": ["node_modules", "dist"]
+    },
+    "include": ["./**/*.ts"],
+    "exclude": ["node_modules", "./node_modules", "./node_modules/*", "./node_modules/@types/node/index.d.ts"]
 }
