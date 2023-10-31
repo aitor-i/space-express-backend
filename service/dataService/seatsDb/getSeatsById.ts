@@ -1,18 +1,11 @@
 import { seatsCollection, mongoClient, getPointer } from "./../mongoClient";
 import { generateEmptySeatsForId } from "../../../application/generateEmptySeats/generateEmptySeats";
 import { SeatModel } from "../../../domain/models/seatModel";
-import { WithId, Document } from "mongodb";
-
-interface SeatsDocument extends SeatModel, Document {}
-
-function seatsMapper(seats: WithId<SeatsDocument>[]) {
-  const seatsViewModel = seats.map((seat) => { 
-        const {_id, ...seatVM} = seat
-        return seatVM
-    });
-  return seatsViewModel;
-}
-
+import { WithId } from "mongodb";
+import {
+  SeatsDocument,
+  seatsMapper,
+} from "../../../application/mappers/seatsMapper/seatsMapper";
 
 export async function getSeatsById(flightId: string) {
   try {
@@ -34,7 +27,6 @@ export async function getSeatsById(flightId: string) {
     }
 
     return seatsMapper(seats);
-
   } catch (err: Error | unknown) {
     console.error(err);
     return [];
