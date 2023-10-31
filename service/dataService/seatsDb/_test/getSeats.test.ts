@@ -13,7 +13,7 @@ describe("Get seats", () => {
 
     const seat = seats[0];
 
-    expect(seat["_id"]).toBe(undefined);
+    expect(seat?._id).toBe(undefined);
     expect(seats.length).toBe(20);
   });
 });
