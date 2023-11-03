@@ -10,4 +10,4 @@ selectSeatRouter.get('/', (req: Request, res: Response) => {
 });
 selectSeatRouter.use(authMiddleware);
 selectSeatRouter.get('/getSeats', getSeatsController);
-selectSeatRouter.post("/reserveSeat", selectSeatController)
+selectSeatRouter.post('/reserveSeat', selectSeatController);
