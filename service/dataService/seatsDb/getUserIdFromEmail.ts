@@ -10,10 +10,7 @@ export async function getUserIdFromEmail(email:string){
     await mongoClient.connect()
         const userPointer = getPointer(usersCollection);
 
-        console.log("Email",email)
-
         const userFromDb = await userPointer.findOne({ email:email} as Partial<UserModel> ) as WithId<UserDocument>
-        console.log("user from db", userFromDb)
         if(userFromDb === null ) return null
 
         return userFromDb._id

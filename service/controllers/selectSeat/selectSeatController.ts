@@ -15,7 +15,6 @@ export async function selectSeatController(req:Request, res:Response){
 
     const {flightId, seatNumber, userEmail} = req.body as SelectSeat
 
-        console.log("user Email", userEmail)
     const userId = await getUserIdFromEmail(userEmail)
         if(userId === null) { 
 
@@ -25,6 +24,10 @@ export async function selectSeatController(req:Request, res:Response){
 
         const selectSeatProps: SelectSeatDbProps = { userId, seatNumber,  flightId}
         const isSuccessful = await selectSeatDb(selectSeatProps);
+        if(!isSuccessful){ 
+            res.status(500).json(messageGenerator("Error selecting seat!"))
+            return
+        }
 
         res.status(202).json({...messageGenerator(`Seat ${seatNumber}, selected!`), isSuccess:isSuccessful})
 
