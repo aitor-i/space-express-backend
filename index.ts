@@ -3,10 +3,12 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { loginRouter } from './service/routers/loginRouter';
 import { selectSeatRouter } from './service/routers/selectSeatRouter';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.use('/api/space-express/auth', loginRouter);
 app.use('/api/space-express/select-seat/', selectSeatRouter);
