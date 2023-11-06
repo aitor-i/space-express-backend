@@ -4,7 +4,8 @@ import { getUserIdFromEmail } from "../dataService/seatsDb/getUserIdFromEmail";
 
 export async function validateUserExistsMiddleware(req:Request, res:Response, next:NextFunction){ 
     try {
-        const email = req.get("email")
+        const cookies = req.cookies
+        const email = cookies.spaceExpress;
         
         if (!email){ 
             res.status(400).json(messageGenerator("email header is needed!"))
