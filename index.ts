@@ -4,9 +4,18 @@ import bodyParser from 'body-parser';
 import { loginRouter } from './service/routers/loginRouter';
 import { selectSeatRouter } from './service/routers/selectSeatRouter';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
-app.use(cors());
+
+const corsUrl = process.env.CORS_URL
+app.use(cors({ 
+    origin: corsUrl,
+    credentials:true
+}));
+
 app.use(bodyParser.json());
 app.use(cookieParser());
 
