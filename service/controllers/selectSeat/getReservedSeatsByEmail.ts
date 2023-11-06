@@ -5,7 +5,8 @@ import { getSeatsByUserId } from "../../dataService/seatsDb/getSeatsByUserId";
 
 export async function getReservedSeatsByEmailController(req:Request, res:Response){ 
     try{ 
-        const  email = req.get("email");
+        const cookie = req.cookies
+        const email = cookie.spaceExpress
 
         const userId = await getUserIdFromEmail(email!)
 
