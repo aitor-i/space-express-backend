@@ -6,6 +6,7 @@ export async function validateUserExistsMiddleware(req:Request, res:Response, ne
     try {
         const cookies = req.cookies
         const email = cookies.spaceExpress;
+        console.log(email, cookies)
         
         if (!email){ 
             res.status(400).json(messageGenerator("email header is needed!"))
