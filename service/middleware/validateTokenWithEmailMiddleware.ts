@@ -6,7 +6,9 @@ import { getEmailFromToken } from "../../application/isTokenExpired/getEmailFrom
 export function validateTokenWithEmailMiddleware(req:Request, res:Response, next:NextFunction){ 
     try {
         const token = req.get('token');
-        const email = req.get("email")
+        const cookies = req.cookies
+        const email = cookies.spaceExpress
+        console.log(email, cookies, email)
         
         if (!email){ 
             res.status(400).json(messageGenerator("email header is needed!"))
