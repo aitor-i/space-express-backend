@@ -4,6 +4,9 @@ import { findUser } from '../dataService/findUser';
 import { messageGenerator } from '../messageGenerator/messageGenerator';
 import { loginValidation } from '../../application/loginValidator/loginValidator';
 import { generateToken } from '../../application/generateToken/generateToken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export interface LoginViewModel {
     email: string;
@@ -11,6 +14,7 @@ export interface LoginViewModel {
 }
 
 export async function loginController(req: Request, res: Response) {
+    const httpOnly = process.env.HTTP_ONLY == "true"
     try {
         const credentials = req.body as LoginViewModel;
 
@@ -29,7 +33,7 @@ export async function loginController(req: Request, res: Response) {
         
 
         res.status(202)
-            .cookie("spaceExpress", credentials.email, { maxAge: 3600000, httpOnly: false })
+            .cookie("spaceExpress", credentials.email, { maxAge: 3600000, httpOnly : httpOnly })
             .json({
                 ...messageGenerator('User logged'),
                 token: tokenFromUser,
