@@ -33,7 +33,7 @@ export async function loginController(req: Request, res: Response) {
         
 
         res.status(202)
-            .cookie("spaceExpress", credentials.email, { maxAge: 3600000, httpOnly : httpOnly , sameSite:"none"})
+            .cookie("spaceExpress", credentials.email, { maxAge: 3600000, httpOnly : httpOnly , sameSite:"none", secure:true})
             .json({
                 ...messageGenerator('User logged'),
                 token: tokenFromUser,
