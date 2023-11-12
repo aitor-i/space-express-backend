@@ -10,20 +10,23 @@ export async function findUser(email: string) {
         await mongoClient.connect();
         const userPointer = getPointer(usersCollection);
 
+
         let user: UserModel;
-        const userDocument: WithId<UserDocument> | null = await userPointer.findOne({ email: email });
-        if (!userDocument) throw new Error('Invalid username or passwod');
-        else if (userDocument) {
+        //console.log("mongo client", mongoClient)
+        const userDocument= await userPointer.findOne({ email: email }).catch((err)=>console.error(err) ) as WithId<UserDocument> ;
+        if (userDocument) {
             user = { ...userDocument };
             return user;
         }
+        return null
     } catch (error: Error | unknown) {
         console.log(Error.toString());
-        throw new Error(Error.toString());
+        console.log("error on finding user")
+        return null
     } finally {
         setTimeout(async () => {
             await mongoClient.close();
             console.log('Db closed');
-        }, 4000);
+        }, 8000);
     }
 }
