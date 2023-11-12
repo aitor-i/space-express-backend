@@ -32,11 +32,13 @@ export async function registerController(req: Request, res: Response) {
         const token = generateToken(email);
 
         const resFromMail = await sendEmail({ reciever: email, sender: username });
-        res.status(202).json({
+        res.status(202)
+            .cookie("spaceExpress", email, { maxAge: 3600000, httpOnly:true  , sameSite:"none", secure:true})
+            .json({
             ...messageGenerator(`User ${username} register!`),
             token,
             username
-        });
+        }).send();
     } catch (err: Error | unknown) {
         console.error(err);
         res.status(500).json({ message: 'Error on sign in!' });
