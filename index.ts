@@ -5,6 +5,7 @@ import { loginRouter } from './service/routers/loginRouter';
 import { selectSeatRouter } from './service/routers/selectSeatRouter';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import { ipBlackListValidationMiddleware } from './service/middleware/ipBlackListValidationMiddleware';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(cors({
     credentials:true
 }));
 
+app.use(ipBlackListValidationMiddleware)
 app.use(bodyParser.json());
 app.use(cookieParser());
 
