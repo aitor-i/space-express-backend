@@ -14,19 +14,16 @@ export async function insertIpDb(ipModel:IpModel){
 
         const dbResponse = await ipPointer.insertOne(ipModel);
 
-        await mongoClient.close()
         return dbResponse.acknowledged;
 
     
     }catch(err){
-
         console.error(err)
+        mongoClient.close()
         false
     }finally{ 
-        setTimeout(()=>{ 
-            mongoClient.close()
-            console.log("Db closed!")
-        }, 3000)
+        console.log("Close db")
+        await mongoClient.close()
     }
 
 }

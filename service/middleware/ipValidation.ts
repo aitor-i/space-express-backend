@@ -13,9 +13,6 @@ export async function ipValidation (ip:string){
                 //const isIpAddedToBlackList = await  addIpToBlackList(ip)
             }
         }
-
-        
-
     }catch(err){ 
     }
 
