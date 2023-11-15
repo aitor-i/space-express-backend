@@ -13,18 +13,15 @@ export async function getIpsByIpDb(ip: string){
         const ips = await ipPointer.find({ip} as Partial<IpModel>).toArray() as WithId<IpDocument>[]
         const mappedIp = ips.map((ipDocument)=>{return {ip: ipDocument.ip, requestDate:ipDocument.requestDate } as IpModel } )
 
-        mongoClient.close()
+        await mongoClient.close()
         return mappedIp
 
     }catch(err){
-
         console.error(err)
         false
     }finally{ 
-        setTimeout(()=>{ 
-            mongoClient.close()
-            console.log("ip db closed!")
-        }, 3000)
+        console.log("DB closed")
+        await mongoClient.close();
     }
 
 }
