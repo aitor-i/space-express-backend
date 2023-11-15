@@ -10,7 +10,7 @@ export async function ipValidation (ip:string){
 
             if (isIpMassivelyConnecting){ 
 
-                //const isIpAddedToBlackList = await  addIpToBlackList(ip)
+                await addIpToBlackList(ip)
             }
         }
     }catch(err){ 
