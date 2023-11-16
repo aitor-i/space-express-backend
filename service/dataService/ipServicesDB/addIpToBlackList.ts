@@ -12,7 +12,6 @@ export async function addIpToBlackList(ip:String){
 
         console.log("is ip added to vblack list", dbResponse.acknowledged)
 
-        mongoClient.close()
         return dbResponse.acknowledged;
     
     }catch(err){
