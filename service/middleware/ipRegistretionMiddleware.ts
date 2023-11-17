@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { IpModel, insertIpDb } from "../dataService/ipServicesDB/insertIp";
-import { ipValidation } from "./ipValidation";
+import { messageGenerator } from "../messageGenerator/messageGenerator";
 
 export async function ipRegistrationMiddleware (req:Request, res: Response, next:NextFunction){ 
     try{ 
@@ -8,9 +8,13 @@ export async function ipRegistrationMiddleware (req:Request, res: Response, next
         const ip = req.ip;
         const ipToSave: IpModel = {ip, requestDate: new Date()}
 
-        const isInsertSuccessful = await insertIpDb(ipToSave);
+        const isSuccess = await insertIpDb(ipToSave);
+        if (!isSuccess) { 
+            res.status(500).json(messageGenerator("Validation error"))
+            console.log("Error registing id!!")
+            return
+        }
        
-        if(isInsertSuccessful) ipValidation(ip)
         next()
     }catch(err){ 
         console.error(err)
