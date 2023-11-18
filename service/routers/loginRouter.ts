@@ -4,6 +4,7 @@ import { loginController } from '../controllers/loginController';
 import { validateTokenController } from '../controllers/validateTokenController';
 import { changePasswordController } from '../controllers/changePasswordController';
 import { ipRegistrationMiddleware } from '../middleware/ipRegistretionMiddleware';
+import { massiveIpValidationMiddleware } from '../middleware/massiveIpValidationMiddleware';
 
 export const loginRouter = Router();
 
@@ -13,6 +14,7 @@ loginRouter.get('/', (req: Request, res: Response) => {
 
 loginRouter.post('/validate-token', validateTokenController);
 loginRouter.use(ipRegistrationMiddleware)
+loginRouter.use(massiveIpValidationMiddleware)
 loginRouter.post('/register', registerController);
 loginRouter.post('/login', loginController);
 loginRouter.post('/change-password', changePasswordController);
