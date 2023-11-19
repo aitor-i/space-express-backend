@@ -19,11 +19,10 @@ export async function insertIpDb(ipModel:IpModel){
     
     }catch(err){
         console.error(err)
-        mongoClient.close()
-        false
+        null
     }finally{ 
-        console.log("Close db")
         await mongoClient.close()
+        console.log("Close ip db")
     }
 
 }

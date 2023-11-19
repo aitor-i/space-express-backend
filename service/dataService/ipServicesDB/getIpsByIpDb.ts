@@ -20,8 +20,8 @@ export async function getIpsByIpDb(ip: string){
         console.error(err)
         false
     }finally{ 
-        console.log("DB closed")
         await mongoClient.close();
+        console.log("DB closed")
     }
 
 }

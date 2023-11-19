@@ -19,10 +19,8 @@ export async function findIpInBlackList(ip:String){
         console.error(err)
         return false
     }finally{ 
-        setTimeout(()=>{ 
-            mongoClient.close()
-            console.log("Black list Db closed!")
-        }, 8000)
+        await mongoClient.close()
+        console.log("Ip black lis db close!")
     }
 
 }
