@@ -14,6 +14,7 @@ export async function ipValidation (ip:string){
             }
         }
     }catch(err){ 
+        console.log("error in ip validation")
     }
 
 }
