@@ -6,7 +6,7 @@ export async function ipValidation (ip:string){
     try{ 
         const ipsToValidat = await getIpsByIpDb(ip);
         if(ipsToValidat){ 
-            const isIpMassivelyConnecting =  checkTimeDifference(ipsToValidat);
+            const isIpMassivelyConnecting =  !checkTimeDifference(ipsToValidat);
 
             if (isIpMassivelyConnecting){ 
 
