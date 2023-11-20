@@ -1,37 +1,28 @@
 import { IpModel } from "../../service/dataService/ipServicesDB/insertIp";
 
-export function checkTimeDifference(models: IpModel[]): boolean {
-  const thresholdInMinutes = 1;
-  const maxModelsWithinThreshold = 5;
-  if(models.length< 5) return false
+export function checkTimeDifference(ipModels: IpModel[]): boolean {
+  const sequenceLength = 5;
+  const maxTimeDifferenceMinutes = 0.2;
 
-  for (let i = 0; i < models.length; i++) {
-    let count = 1; // Start count at 1 for the current model
-    const currentModel = models[i];
+  for (let i = 0; i <= ipModels.length - sequenceLength; i++) {
+    let isConsecutiveSequence = true;
 
-    for (let j = i + 1; j < models.length; j++) {
-      const compareModel = models[j];
+    for (let j = 1; j < sequenceLength; j++) {
+      const currentModel = ipModels[i + j - 1];
+      const nextModel = ipModels[i + j];
 
-      // Calculate the time difference in minutes
-      const timeDifference = Math.abs(
-        (currentModel.requestDate.getTime() - compareModel.requestDate.getTime()) / (1000 * 60)
-      );
+      const timeDifference = (nextModel.requestDate.getTime() - currentModel.requestDate.getTime()) / (1000 * 60);
 
-      // Check if the time difference is within the threshold
-      if (timeDifference <= thresholdInMinutes) {
-        count++;
-
-        // Check if the count exceeds the maximum allowed models within the threshold
-        if (count > maxModelsWithinThreshold) {
-          return false;
-        }
+      if (timeDifference > maxTimeDifferenceMinutes) {
+        isConsecutiveSequence = false;
+        break;
       }
+    }
+
+    if (isConsecutiveSequence) {
+      return false;
     }
   }
 
   return true;
 }
-
-
-
-
