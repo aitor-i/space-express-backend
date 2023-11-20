@@ -12,13 +12,11 @@ export async function getSeatsByUserId(userId: ObjectId) {
         const seats = (await seatsPointer.find({ userId: userId } as Partial<SeatModel>).toArray()) as WithId<SeatsDocument>[];
 
         return seatsMapper(seats);
-
     } catch (err: Error | unknown) {
         console.error(err);
         return [];
-
     } finally {
-        await mongoClient.close()
-        console.log("Close seats collection!")
+        await mongoClient.close();
+        console.log('Close seats collection!');
     }
 }

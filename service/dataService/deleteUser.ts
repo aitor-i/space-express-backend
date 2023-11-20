@@ -22,6 +22,6 @@ export async function deleteUser(email: string) {
             throw new Error('Error on db for user delete');
         }
     } finally {
-            await mongoClient.close();
+        await mongoClient.close();
     }
 }

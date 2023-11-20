@@ -13,8 +13,8 @@ loginRouter.get('/', (req: Request, res: Response) => {
 });
 
 loginRouter.post('/validate-token', validateTokenController);
-loginRouter.use(ipRegistrationMiddleware)
-loginRouter.use(massiveIpValidationMiddleware)
+loginRouter.use(ipRegistrationMiddleware);
+loginRouter.use(massiveIpValidationMiddleware);
 loginRouter.post('/register', registerController);
 loginRouter.post('/login', loginController);
 loginRouter.post('/change-password', changePasswordController);

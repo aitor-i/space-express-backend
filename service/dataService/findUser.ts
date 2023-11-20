@@ -7,21 +7,21 @@ interface UserDocument extends Document, UserModel {}
 
 export async function findUser(email: string) {
     try {
-        await mongoClient.close()
+        await mongoClient.close();
         await mongoClient.connect();
 
         const userPointer = getPointer(usersCollection);
 
         let user: UserModel;
-        const userDocument= await userPointer.findOne({ email: email }) as WithId<UserDocument> ;
+        const userDocument = (await userPointer.findOne({ email: email })) as WithId<UserDocument>;
         if (userDocument) {
             user = { ...userDocument };
             return user;
         }
-        return null
+        return null;
     } catch (error: Error | unknown) {
-        return null
+        return null;
     } finally {
-        await mongoClient.close()
+        await mongoClient.close();
     }
 }

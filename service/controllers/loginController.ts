@@ -14,7 +14,7 @@ export interface LoginViewModel {
 }
 
 export async function loginController(req: Request, res: Response) {
-    const httpOnly = process.env.HTTP_ONLY == "true"
+    const httpOnly = process.env.HTTP_ONLY == 'true';
     try {
         const credentials = req.body as LoginViewModel;
 
@@ -30,15 +30,15 @@ export async function loginController(req: Request, res: Response) {
         }
 
         const tokenFromUser = generateToken(credentials.email);
-        
 
         res.status(202)
-            .cookie("spaceExpress", credentials.email, { maxAge: 3600000, httpOnly : httpOnly , sameSite:"none", secure:true})
+            .cookie('spaceExpress', credentials.email, { maxAge: 3600000, httpOnly: httpOnly, sameSite: 'none', secure: true })
             .json({
                 ...messageGenerator('User logged'),
                 token: tokenFromUser,
                 username: user.username
-            }).send();
+            })
+            .send();
     } catch (err: Error | unknown) {
         console.log(err);
         res.status(500).json({ message: 'Error on log in' });

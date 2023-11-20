@@ -32,6 +32,6 @@ export async function selectSeatDb(props: SelectSeatDbProps) {
         console.error(err);
         return false;
     } finally {
-        await mongoClient.close()
+        await mongoClient.close();
     }
 }

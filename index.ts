@@ -11,13 +11,15 @@ dotenv.config();
 
 const app = express();
 
-const corsUrl = process.env.CORS_URL
-app.use(cors({ 
-    origin: corsUrl,
-    credentials:true
-}));
+const corsUrl = process.env.CORS_URL;
+app.use(
+    cors({
+        origin: corsUrl,
+        credentials: true
+    })
+);
 
-app.use(ipBlackListValidationMiddleware)
+app.use(ipBlackListValidationMiddleware);
 app.use(bodyParser.json());
 app.use(cookieParser());
 

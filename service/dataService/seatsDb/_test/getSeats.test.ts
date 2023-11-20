@@ -7,5 +7,4 @@ describe('Get seats', () => {
 
         expect(seats.length).toBe(20);
     });
-
 });

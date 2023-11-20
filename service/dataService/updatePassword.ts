@@ -21,6 +21,6 @@ export async function updatePassword(email: string, password: string) {
         console.log(Error.toString());
         throw new Error('Error inserting user');
     } finally {
-            await mongoClient.close();
+        await mongoClient.close();
     }
 }
