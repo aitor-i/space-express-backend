@@ -18,7 +18,7 @@ export async function getUserIdFromEmail(email: string) {
         console.error(err);
         throw new Error('Error finding user id!');
     } finally {
-        mongoClient.close();
+        await mongoClient.close();
         console.log('Db closed!!');
     }
 }

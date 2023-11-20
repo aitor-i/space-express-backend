@@ -18,9 +18,7 @@ export async function getSeatsByUserId(userId: ObjectId) {
         return [];
 
     } finally {
-        setTimeout(() => {
-            mongoClient.close();
-            console.log('Db closed!!');
-        }, 3000);
+        await mongoClient.close()
+        console.log("Close seats collection!")
     }
 }

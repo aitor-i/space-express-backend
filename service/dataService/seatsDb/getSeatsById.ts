@@ -25,9 +25,6 @@ export async function getSeatsById(flightId: string) {
         console.error(err);
         return [];
     } finally {
-        setTimeout(() => {
-            mongoClient.close();
-            console.log('Db closed!!');
-        }, 3000);
+        await mongoClient.close()
     }
 }
