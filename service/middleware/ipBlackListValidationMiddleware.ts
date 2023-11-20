@@ -10,9 +10,8 @@ export async function ipBlackListValidationMiddleware(req:Request, res:Response,
         const isIpOnBlackList = await findIpInBlackList(ip);
 
         if(isIpOnBlackList){
-            
 
-        res.status(400).json(messageGenerator("your ip is on a black list!"))
+            res.status(400).json(messageGenerator("your ip is on a black list!"))
             return
         }
         else{
