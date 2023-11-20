@@ -21,9 +21,6 @@ export async function updatePassword(email: string, password: string) {
         console.log(Error.toString());
         throw new Error('Error inserting user');
     } finally {
-        setTimeout(async () => {
             await mongoClient.close();
-            console.log('Db closed');
-        }, 4000);
     }
 }

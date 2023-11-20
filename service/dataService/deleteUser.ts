@@ -22,9 +22,6 @@ export async function deleteUser(email: string) {
             throw new Error('Error on db for user delete');
         }
     } finally {
-        setTimeout(async () => {
             await mongoClient.close();
-            console.log('Db closed');
-        }, 4000);
     }
 }

@@ -5,30 +5,34 @@ import { UserModel } from '../../domain/models/userModel';
 
 export async function insetUser(user: UserModel) {
     try {
+        await mongoClient.close()
         await mongoClient.connect();
+        console.log("Connected user db")
         const userPointer = getPointer(usersCollection);
 
-        console.log('CONNECTED!');
 
-        const isUser = await userPointer.findOne({ email: user.email });
+        const isUser = await userPointer.findOne({ email: user.email }).catch(err=> console.log("Error finding user:", err));
         if (isUser) {
+
             console.error(`Email ${user.email} is taken!`);
             return { isValid: false, message: 'Email is taken!' };
         }
+        await mongoClient.close()
+        await mongoClient.connect()
 
-        const dbResponse = await userPointer.insertOne(user);
-        if (!dbResponse.acknowledged) {
+        const dbResponse = await userPointer.insertOne(user).catch(err => console.log("Error adding user", err));
+        if (!dbResponse?.acknowledged) {
+
             console.error('DB response: ', dbResponse);
             throw new Error('Error on user  db');
         }
         return { isValid: true, message: 'User inseted' };
     } catch (error: Error | unknown) {
-        console.error('Error adding user', Error);
-        throw new Error('Error inserting user');
+        console.error('Error adding user', Error.name);
+        return {isValid:false, message : "Error adding user"}
+
     } finally {
-        setTimeout(async () => {
-            await mongoClient.close();
-            console.log('Db closed');
-        }, 4000);
+        await mongoClient.close()
+        console.log("user db closed")
     }
 }
