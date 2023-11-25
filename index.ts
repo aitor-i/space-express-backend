@@ -6,10 +6,13 @@ import { selectSeatRouter } from './service/routers/selectSeatRouter';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import { ipBlackListValidationMiddleware } from './service/middleware/ipBlackListValidationMiddleware';
-
+import { runChatServer } from './chat/service/runChatServer';
+import {WebSocket } from 'ws'
 dotenv.config();
 
 const app = express();
+const chat = express();
+
 
 const corsUrl = process.env.CORS_URL;
 app.use(
@@ -35,3 +38,13 @@ app.use('*', (req, res) => {
 app.listen(4000, () => {
     console.log('listening on port 4000!');
 });
+
+const chatServer = chat.listen(4001, () => { 
+    console.log("Chat server listening on port 4001!")
+})
+
+
+
+const clients= new Set<WebSocket>;
+runChatServer(chatServer, clients )
+
