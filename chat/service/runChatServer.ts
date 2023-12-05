@@ -1,20 +1,26 @@
 import http from 'http'
 import {WebSocket, WebSocketServer} from 'ws'
+import { UUID, randomUUID } from 'crypto'
+
  
 interface Message { 
-    status: 'messeag' | 'typeing',
+    messageId: UUID,
+    status: 'messeag' | 'typing',
     message: string|undefined,
     userId:string,
     userAlias: string
     roomId: string
+    isTyping:boolean
 }
 
 interface Response { 
-    status: 'messeag' | 'typeing',
-    messages: Message[]|undefined,
+    messageId?: UUID | null,
+    status: 'messeag' | 'typing',
+    message: Message|undefined,
     userId:string,
     userAlias: string
     roomId:string
+    isTyping:boolean
 }
 
 export function runChatServer (server: http.Server, client: Set<WebSocket> ) { 
@@ -37,41 +43,34 @@ export function runChatServer (server: http.Server, client: Set<WebSocket> ) {
             const parsedMessage = JSON.parse(message) as Message;
             console.log(parsedMessage);
 
-            if(parsedMessage.status === 'typeing'){ 
+            if(parsedMessage.status === 'typing'){ 
                 const response: Response = { 
-                    status: 'typeing',
-                    messages: undefined,
+                    status: parsedMessage.status,
+                    message: undefined,
                     userId: parsedMessage.userId,
                     userAlias: parsedMessage.userAlias,
-                    roomId: parsedMessage.roomId
+                    roomId: parsedMessage.roomId,
+                    isTyping: parsedMessage.isTyping,
                 }
-
                 const responseString = JSON.stringify(response)
                 ws.send(responseString)
                 return
             }
 
-            prevMessages.push(parsedMessage);
+            const messageWithId = {...parsedMessage, messageId: randomUUID() };
+            prevMessages.push(messageWithId);
             
-            const textMessages = prevMessages.filter(message => message.message !== undefined)
-            const textMessagesString = JSON.stringify(textMessages)
+            const textMessagesString = JSON.stringify(messageWithId);
 
             ws.send(textMessagesString)
         })
-
 
         ws.on("close", ()=> { 
             // Persist data on BD
     
             console.log("chat closed!!", prevMessages)
         })
-
-
-
-        
-        
     })
-
 
     wss.on("error", (err)=>{ 
         console.log(err)
