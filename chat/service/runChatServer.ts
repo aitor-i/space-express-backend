@@ -5,7 +5,7 @@ import { UUID, randomUUID } from 'crypto'
  
 interface Message { 
     messageId: UUID,
-    status: 'messeag' | 'typing',
+    status: 'message' | 'typing',
     message: string|undefined,
     userId:string,
     userAlias: string
@@ -13,14 +13,26 @@ interface Message {
     isTyping:boolean
 }
 
-interface Response { 
-    messageId?: UUID | null,
-    status: 'messeag' | 'typing',
+interface RequestMessage{ 
+
+    status: 'message' | 'typing',
     message: Message|undefined,
+    isTyping:boolean
+    typingObject?: TypingObject
+}
+
+interface TypingObject{ 
+
     userId:string,
     userAlias: string
     roomId:string
+}
+
+interface Response { 
+    status: 'message' | 'typing',
+    message: Message[]|undefined,
     isTyping:boolean
+    typingObject?: TypingObject
 }
 
 export function runChatServer (server: http.Server, client: Set<WebSocket> ) { 
@@ -28,39 +40,55 @@ export function runChatServer (server: http.Server, client: Set<WebSocket> ) {
 
     wss.on("connection", (ws:WebSocket)=> { 
         
-        console.log("WS: ", ws)
-
         // Get flight data 
         // Fetch prev data from DB
-        const rooomId = ws.protocol;
+        const roomId = ws.protocol;
         const prevMessages:Message[] =  [];
+
+        const prevMessagesFromRoomId = prevMessages.filter(message => message.roomId === roomId)
+        const firstMessagesResponse: Response = { 
+           status: 'message',
+            message: prevMessagesFromRoomId,
+            isTyping:false,
+        }
+
+        ws.send(JSON.stringify(firstMessagesResponse))
+    
         client.add(ws)
 
         // Send de prev data as first message
         ws.send(JSON.stringify(prevMessages))
         
         ws.on("message", (message:string)=>{ 
-            const parsedMessage = JSON.parse(message) as Message;
-            console.log(parsedMessage);
+            
+            const parsedRequest = JSON.parse(message) as RequestMessage;
+            console.log("Parsed reques!!!: ", parsedRequest)
 
-            if(parsedMessage.status === 'typing'){ 
+            if(parsedRequest.status === 'typing'){ 
+                console.log("Typing!!!!")
                 const response: Response = { 
-                    status: parsedMessage.status,
+                    status: parsedRequest.status,
                     message: undefined,
-                    userId: parsedMessage.userId,
-                    userAlias: parsedMessage.userAlias,
-                    roomId: parsedMessage.roomId,
-                    isTyping: parsedMessage.isTyping,
+                    isTyping: true,
                 }
+                
                 const responseString = JSON.stringify(response)
                 ws.send(responseString)
                 return
             }
 
-            const messageWithId = {...parsedMessage, messageId: randomUUID() };
-            prevMessages.push(messageWithId);
+            if(parsedRequest.message === undefined) return;
+            parsedRequest.message.messageId = randomUUID();
+            prevMessages.push(parsedRequest.message);
             
-            const textMessagesString = JSON.stringify(messageWithId);
+            console.log("Prev messages: ", prevMessages)
+            const responseMessage: Response = { 
+                status: 'message',
+                message: prevMessages,
+                isTyping: false
+            }
+            const textMessagesString = JSON.stringify(responseMessage);
+            console.log("Response to messgae: ", responseMessage)
 
             ws.send(textMessagesString)
         })
