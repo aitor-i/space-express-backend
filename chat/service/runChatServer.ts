@@ -35,6 +35,8 @@ interface Response {
     typingObject?: TypingObject
 }
 
+const prevMessages:Message[] =  [];
+
 export function runChatServer (server: http.Server, client: Set<WebSocket> ) { 
     const wss  = new WebSocketServer({server})
 
@@ -43,7 +45,6 @@ export function runChatServer (server: http.Server, client: Set<WebSocket> ) {
         // Get flight data 
         // Fetch prev data from DB
         const roomId = ws.protocol;
-        const prevMessages:Message[] =  [];
 
         const prevMessagesFromRoomId = prevMessages.filter(message => message.roomId === roomId)
         const firstMessagesResponse: Response = { 
@@ -52,12 +53,11 @@ export function runChatServer (server: http.Server, client: Set<WebSocket> ) {
             isTyping:false,
         }
 
+
         ws.send(JSON.stringify(firstMessagesResponse))
-    
+        console.log("First message: ", firstMessagesResponse)
         client.add(ws)
 
-        // Send de prev data as first message
-        ws.send(JSON.stringify(prevMessages))
         
         ws.on("message", (message:string)=>{ 
             
