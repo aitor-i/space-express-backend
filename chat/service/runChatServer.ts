@@ -23,13 +23,11 @@ export function runChatServer (server: http.Server, client: Set<WebSocket> ) {
             isTyping:false,
         }
 
-
         ws.send(JSON.stringify(firstMessagesResponse))
-        console.log("First message: ", firstMessagesResponse)
         client.add(ws)
 
         
-        ws.on("message", (message:string)=>{ onMessageHandler(message, ws)} )
+        ws.on("message", (message:string)=>{ onMessageHandler(message, ws, prevMessages)} )
 
         ws.on("close", ()=> { 
             // Persist data on BD

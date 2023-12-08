@@ -1,8 +1,9 @@
 
-import {WebSocket, WebSocketServer} from 'ws'
-import { UUID, randomUUID } from 'crypto'
+import {WebSocket } from 'ws'
+import {  randomUUID } from 'crypto'
+import { Message, RequestMessage, Response } from '../domain/types';
 
-export const onMessageHandler = (message:string, ws:WebSocket)=>{ 
+export const onMessageHandler = (message:string, ws:WebSocket, prevMessages:Message[])=>{ 
 
     const parsedRequest = JSON.parse(message) as RequestMessage;
     console.log("Parsed reques!!!: ", parsedRequest)
