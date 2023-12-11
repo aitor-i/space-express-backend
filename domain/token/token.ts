@@ -37,7 +37,6 @@ class Token {
             iat: number;
             username: string;
         };
-        console.log(res);
         return res.exp <= 0;
     }
 }
