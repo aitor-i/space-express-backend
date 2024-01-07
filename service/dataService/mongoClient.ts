@@ -27,6 +27,12 @@ export type Collections =
     | typeof ipBlackListCollection;
 
 export function getPointer(collection: Collections) {
-    const database: Db = mongoClient.db(dbName);
-    return database.collection(collection);
+    try{ 
+
+        const database: Db = mongoClient.db(dbName);
+        return database.collection(collection);
+    }catch(err){ 
+        console.error("Error getting pointer")
+        throw new Error("Error on getting pointer")
+    }
 }
