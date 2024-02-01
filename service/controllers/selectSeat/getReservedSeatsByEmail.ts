@@ -2,13 +2,14 @@ import { Response, Request } from 'express';
 import { messageGenerator } from '../../messageGenerator/messageGenerator';
 import { getUserIdFromEmail } from '../../dataService/seatsDb/getUserIdFromEmail';
 import { getSeatsByUserId } from '../../dataService/seatsDb/getSeatsByUserId';
+import { ObjectId } from 'mongodb';
 
 export async function getReservedSeatsByEmailController(req: Request, res: Response) {
     try {
         const cookie = req.cookies;
         const email = cookie.spaceExpress;
 
-        const userId = await getUserIdFromEmail(email!);
+        const userId = await getUserIdFromEmail(email!) as ObjectId;
 
         const seats = await getSeatsByUserId(userId!);
 
